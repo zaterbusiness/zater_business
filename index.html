@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Zater | Home</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow-x: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .animate-on-scroll { opacity: 0; }
+        .animate-on-scroll.animated { animation-duration: 1s; animation-fill-mode: both; animation-timing-function: ease-out; }
+        .fade-in-up { animation-name: fadeInUp; }
+        .fade-in-left { animation-name: fadeInLeft; }
+        .fade-in-right { animation-name: fadeInRight; }
+        .scale-in { animation-name: scaleIn; }
+
+        .navbar { background-color: brown !important; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        .navbar-brand { font-size: 1.8rem; transition: transform 0.3s ease; letter-spacing: 2px; }
+        .navbar-brand:hover { transform: scale(1.15); }
+        .btn-outline-light:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,255,255,0.3); }
+
+        .hero-section { padding: 100px 0; background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%); position: relative; overflow: hidden; }
+        .hero-section::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(165,42,42,0.1) 0%, transparent 70%); border-radius: 50%; top: -100px; right: -100px; animation: float 6s ease-in-out infinite; }
+
+        .hero-title { font-size: 3.5rem; font-weight: bold; text-align: center; margin-top: 30px; background: linear-gradient(135deg, brown, #d2691e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.3; }
+        .hero-subtitle { font-size: 1.3rem; margin-top: 30px; text-align: center; color: #555; line-height: 1.8; }
+
+        .apply-btn { padding: 18px 50px; font-size: 1.2rem; border-radius: 50px; transition: all 0.4s ease; border: 3px solid #dc3545; background: transparent; color: #dc3545; font-weight: bold; position: relative; overflow: hidden; }
+        .apply-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: #dc3545; transition: left 0.4s ease; z-index: -1; }
+        .apply-btn:hover::before { left: 0; }
+        .apply-btn:hover { color: white; transform: translateY(-5px); box-shadow: 0 15px 35px rgba(220,53,69,0.4); }
+
+        .product-box { width: 100%; max-width: 550px; border: 3px solid brown; padding: 40px; margin: 50px auto; border-radius: 25px; background: white; box-shadow: 0 15px 50px rgba(0,0,0,0.12); transition: all 0.4s ease; position: relative; }
+        .product-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 25px; background: linear-gradient(135deg, rgba(165,42,42,0.05) 0%, transparent 100%); z-index: 0; }
+        .product-box > * { position: relative; z-index: 1; }
+        .product-box:hover { transform: translateY(-15px); box-shadow: 0 25px 70px rgba(165,42,42,0.2); border-color: #d2691e; }
+        .product-box h4 { color: brown; font-weight: bold; margin-bottom: 35px; font-size: 1.6rem; text-align: center; }
+        .product-box ul { padding-left: 0; }
+        .product-box li { list-style: none; font-size: 1.2rem; margin-top: 28px; color: #333; transition: all 0.3s ease; padding: 12px; border-radius: 12px; cursor: pointer; }
+        .product-box li:hover { background: rgba(165,42,42,0.15); transform: translateX(15px); }
+        .product-box i { color: brown; margin-right: 12px; font-size: 1.4rem; transition: transform 0.3s ease; }
+        .product-box li:hover i { transform: rotate(360deg); }
+        .product-box label { display: block; margin-top: 10px; font-size: 0.95rem; color: #666; margin-left: 40px; }
+
+        .slider-container { position: relative; width: 100%; padding: 80px 40px; margin: 100px 0; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); }
+        .slider { overflow: hidden; border-radius: 25px; }
+        .slider-track { display: flex; gap: 30px; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); padding: 20px 0; }
+        .card { flex-shrink: 0; width: 50%; height: 750px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 70px rgba(0,0,0,0.25); transition: all 0.4s ease; position: relative; }
+        .card:hover { transform: scale(1.08); box-shadow: 0 30px 80px rgba(0,0,0,0.3); }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(165,42,42,0.95); color: white; border: none; font-size: 2.2rem; padding: 18px 28px; cursor: pointer; border-radius: 50%; z-index: 10; transition: all 0.3s ease; }
+        .nav-btn:hover { background: brown; transform: translateY(-50%) scale(1.15); }
+        .nav-btn.left { left: 20px; }
+        .nav-btn.right { right: 20px; }
+
+        .zoho-btn { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; border: none; padding: 20px 50px; font-size: 1.2rem; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 8px 25px rgba(220,53,69,0.35); position: relative; overflow: hidden; }
+        .zoho-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(220,53,69,0.5); }
+
+        .hero-wrapper { background: #ffd500; padding: 100px 20px; margin: 100px 0; position: relative; overflow: hidden; }
+        .hero-banner { max-width: 1200px; margin: 0 auto; background: black; color: white; border-radius: 35px; padding: 80px 60px; box-shadow: 0 25px 70px rgba(0,0,0,0.4); }
+        .hero-text { text-align: center; }
+        .hero-text .small-title { font-size: 1.3rem; color: #f6c065; margin-bottom: 25px; }
+        .hero-text h1 { font-size: 4rem; color: #f6c065; margin-bottom: 40px; font-weight: bold; }
+        .read-story { display: inline-block; color: #ff6b00; text-decoration: none; font-weight: bold; font-size: 1.2rem; padding: 18px 40px; border: 3px solid #ff6b00; border-radius: 50px; transition: all 0.3s ease; }
+        .read-story:hover { color: white; background: #ff6b00; transform: scale(1.08); }
+
+        .zoho-section { background: #ffd500; padding: 100px 20px; }
+        .zoho-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .zoho-left h4 { color: brown; font-size: 1.2rem; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+        .zoho-left h1 { font-size: 4.5rem; margin-bottom: 20px; font-weight: bold; animation: float 4s ease-in-out infinite; }
+        .tagline { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; color: #333; }
+        .desc { font-size: 1.15rem; line-height: 2; margin-bottom: 40px; color: #333; }
+        .quote { font-style: italic; font-size: 1.4rem; color: #333; margin-bottom: 50px; padding: 35px; background: rgba(255,255,255,0.4); border-radius: 20px; border-left: 6px solid brown; }
+        .counter-section { padding: 40px; background: white; border-radius: 25px; text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.15); }
+        .counter-section h2 { font-size: 1.2rem; color: #666; margin-bottom: 15px; text-transform: uppercase; }
+        .counter-section h1 { font-size: 3.5rem; color: brown; margin: 20px 0; font-weight: bold; }
+        .counter-section p { color: #666; font-size: 1.1rem; }
+
+        .ad-video-box { position: relative; width: 100%; max-width: 1300px; margin: auto; padding-bottom: 56.25%; overflow: hidden; }
+        #soundBtn { position: absolute; bottom: 180px; right: 15px; background: rgba(0,0,0,0.6); border: none; color: white; font-size: 18px; padding: 8px 10px; border-radius: 50%; cursor: pointer; z-index: 10; }
+        .ad-video-box video { position: absolute; width: 100%; height: 80%; top: 0; left: 0; object-fit: cover; border-radius: 12px; }
+
+        footer { background-color: rgb(217,221,225); margin-top: 100px; padding: 80px 0 40px; }
+        footer h5 { font-weight: bold; margin-bottom: 25px; color: brown; font-size: 1.3rem; }
+        footer a { color: #333; text-decoration: none; transition: all 0.3s ease; display: inline-block; font-size: 1.05rem; }
+        footer a:hover { color: brown; transform: translateX(8px); }
+        footer .fab { font-size: 1.8rem; transition: all 0.3s ease; margin-right: 15px; }
+        footer .fab:hover { transform: scale(1.3) rotate(10deg); color: brown; }
+        footer li { margin-bottom: 12px; }
+
+        @media (max-width: 1024px) { .hero-title { font-size: 2.8rem; } .card { width: 60%; height: 600px; } .zoho-container { grid-template-columns: 1fr; gap: 60px; } }
+        @media (max-width: 767px) { .hero-title { font-size: 2rem; } .card { width: 80%; height: 400px; } .hero-banner { padding: 40px 25px; } .hero-text h1 { font-size: 2rem; } .zoho-left h1 { font-size: 2.5rem; } }
+        @media (max-width: 480px) { .hero-title { font-size: 1.6rem; } .card { width: 90%; height: 350px; } .navbar-brand { font-size: 1.4rem; } }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white fw-bold" href="#">ZATER</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Partner</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Vaishiva.M (B.E) – Marketing Management</a></li>
+            <li><a class="dropdown-item" href="#">Ramya.R (B.E) – Communication Management</a></li>
+            <li><a class="dropdown-item" href="#">Janarthanan.R (B.E) – Feedback Management</a></li>
+            <li><a class="dropdown-item" href="#">Gopal Krishnan.M (B.E) – Marketing Management</a></li>
+            <li><a class="dropdown-item" href="#">Arvin.R (B.E) – Executive Management</a></li>
+            <li><a class="dropdown-item" href="#">Priya Dharshini.C (B.E) – Social Media Management</a></li>
+            <li><a class="dropdown-item" href="#">Abinaya.M (B.Sc) – Accounts Management</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Product</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">🌐 Web Design</a></li>
+            <li><a class="dropdown-item" href="#">🎨 Poster Design</a></li>
+            <li><a class="dropdown-item" href="#">📽 Advertisement Video</a></li>
+            <li><a class="dropdown-item" href="#">✂ Video Editing</a></li>
+            <li><a class="dropdown-item" href="#">📐 AutoCAD</a></li>
+            <li><a class="dropdown-item" href="#">✍ Content Writing</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Customer</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="C:\Users\vaish\OneDrive\Documents\Zater_Business\enquiry.html">📋 Send Enquiry</a></li>
+            <li><a class="dropdown-item" href="https://forms.gle/J1A9Lm4wDBFTpnWbA">💬 Feedback</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Contact</a>
+          <ul class="dropdown-menu p-2">
+            <li style="padding-left:10px;">
+              <a href="https://www.instagram.com/zater_company?igsh=Nm03emRiMWN2emlu" class="text-dark pe-2"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="text-dark pe-2"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="text-dark pe-2"><i class="fab fa-x-twitter"></i></a>
+              <a href="#" class="text-dark pe-2"><i class="fab fa-telegram"></i></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link text-white" href="zater-about-detail.pdf">About</a></li>
+      </ul>
+      <a href="enquiry.html">
+        <button class="btn btn-outline-light fw-bold" type="button">Apply</button>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 col-md-12 animate-on-scroll fade-in-left hero-offset-1">
+        <p class="hero-title">ZATER – Smart Digital Services</p>
+        <p class="hero-subtitle">We provide reliable <b>Web design, Poster design, AutoCAD and Advertisement video services</b>. Contact us for more information.</p>
+        <div class="text-center mt-5">
+          <a href="enquiry.html"><button class="apply-btn" type="button">Explore Now</button></a>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 animate-on-scroll fade-in-right">
+        <div class="product-box">
+          <h4>Product Details</h4>
+          <ul>
+            <li><i class="fa-solid fa-globe"></i>Web Design<label>Modern, responsive websites that grow your business.</label></li>
+            <li><i class="fa-solid fa-camera-retro"></i>Poster Design<label>Creative posters that capture attention instantly.</label></li>
+            <li><i class="fa-solid fa-video"></i>Advertisement Video<label>Engaging ad videos that promote your brand effectively.</label></li>
+            <li><i class="fa-brands fa-codepen"></i>Auto CAD<label>Accurate and professional AutoCAD drafting solutions.</label></li>
+            <li><i class="fa-brands fa-youtube"></i>Video Editing<label>High-quality video editing that tells your story.</label></li>
+            <li><i class="fa-solid fa-clipboard"></i>Content Writing<label>Clear, powerful content that connects with your audience.</label></li>
+            <li><i class="fa-solid fa-camera"></i>Photo Editing<label>Enhancing photos to look their absolute best.</label></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-12 animate-on-scroll fade-in-left hero-offset-2">
+        <h1 class="hero-title">Send the Feedback</h1>
+        <p class="hero-subtitle">We provide reliable and Trusted Company. Contact us for more information.</p>
+        <div class="text-center mt-5">
+          <a href="https://forms.gle/J1A9Lm4wDBFTpnWbA"><button class="apply-btn" type="button">FeedBack</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AD VIDEO -->
+<div class="ad-video-box">
+  <video id="adVideo" autoplay muted playsinline loop>
+    <source src="zater-video.mp4" type="video/mp4">
+  </video>
+  <button id="soundBtn">🔇</button>
+</div>
+
+<!-- SLIDER -->
+<div class="slider-container animate-on-scroll fade-in-up">
+  <button class="nav-btn left" onclick="moveLeft()">❮</button>
+  <div class="slider">
+    <div class="slider-track" id="sliderTrack">
+      <div class="card"><img src="Yellow and Black Illustration Website Design Social Media Graphic.png" alt="Web Design"></div>
+      <div class="card"><img src="believe.png" alt="Poster Design"></div>
+      <div class="card"><img src="Grey and Black Modern Video Editing Service Promotion Instagram Post .png" alt="Video Production"></div>
+      <div class="card"><img src="Beige Illustrative World Letter Writing Day Instagram Post .png" alt="Marketing"></div>
+      <div class="card"><img src="Soft Brown Pastel Minimalist New Happy Creative Elegant Abstract World Art Day Instagram Post.png" alt="Development"></div>
+      <div class="card"><video controls autoplay muted loop><source src="WhatsApp Video 2026-01-26 at 09.16.42.mp4" type="video/mp4"></video></div>
+    </div>
+  </div>
+  <button class="nav-btn right" onclick="moveRight()">❯</button>
+</div>
+
+<div class="text-center my-5 animate-on-scroll scale-in">
+  <a href="enquiry.html"><button class="zoho-btn">GET STARTED WITH ZATER</button></a>
+</div>
+
+<!-- HERO BANNER -->
+<section class="hero-wrapper animate-on-scroll fade-in-up">
+  <div class="hero-banner">
+    <div class="hero-text">
+      <p class="small-title">Building digital solutions that truly last,</p>
+      <h1>we make ideas work</h1>
+      <a href="enquiry.html" class="read-story">EXPLORE OUR SERVICES →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ZOHO / ABOUT SECTION -->
+<section class="zoho-section">
+  <div class="zoho-container">
+    <div class="zoho-left animate-on-scroll fade-in-left">
+      <h4>All-in-one Service Platform</h4>
+      <h1>ZATER</h1>
+      <p class="tagline">Smart solutions for modern businesses</p>
+      <p class="desc">Zater is a service-based company providing complete digital solutions including web development, design, marketing, and business automation. We help startups and businesses grow faster with reliable and affordable services.</p>
+      <a href="enquiry.html"><button class="zoho-btn">GET STARTED WITH ZATER</button></a>
+    </div>
+    <div class="zoho-right animate-on-scroll fade-in-right">
+      <p class="quote">"Zater helped us build our brand digitally with quality service and professional support."</p>
+      <div class="counter-section">
+        <h2>Trusted by</h2>
+        <h1><span id="counter">0</span>+ Happy Customers</h1>
+        <p>Across startups and growing businesses</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="animate-on-scroll fade-in-up">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3"><h5>ZATER</h5></div>
+      <div class="col-md-6 text-md-end mb-3"><button class="btn btn-light">India</button></div>
+    </div>
+    <div class="row">
+      <div class="col-md col-6 mb-4">
+        <h5>More Order</h5>
+        <ul class="list-unstyled">
+          <li><a href="enquiry.html">Web Design</a></li>
+          <li><a href="enquiry.html">Poster Design</a></li>
+          <li><a href="enquiry.html">Auto CAD</a></li>
+          <li><a href="enquiry.html">Advertisement Video</a></li>
+          <li><a href="enquiry.html">Photo Editing</a></li>
+          <li><a href="enquiry.html">Video Editing</a></li>
+        </ul>
+      </div>
+      <div class="col-md col-6 mb-4">
+        <h5>About Us</h5>
+        <ul class="list-unstyled">
+          <li><a href="zater-about-detail.pdf">About Company</a></li>
+          <li><a href="https://forms.gle/J1A9Lm4wDBFTpnWbA">Feedback</a></li>
+        </ul>
+      </div>
+      <div class="col-md col-6 mb-4">
+        <h5>Social Links</h5>
+        <div>
+          <a href="https://www.instagram.com/zater_company?igsh=Nm03emRiMWN2emlu"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="col-md col-6 mb-4">
+        <h5>Legal</h5>
+        <ul class="list-unstyled">
+          <li><a href="Zater_Terms_and_Conditions_With_Logo.pdf">Terms &amp; Conditions</a></li>
+          <li><a href="https://forms.gle/J1A9Lm4wDBFTpnWbA">Customer Feedback</a></li>
+          <li><a href="https://forms.gle/J1A9Lm4wDBFTpnWbA">Help &amp; Support</a></li>
+        </ul>
+      </div>
+      <div class="col-md col-12 mb-4">
+        <h5>Available In</h5>
+        <p>World</p>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center;">© 2026 Zater Service Company. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // SOUND TOGGLE
+  const video = document.getElementById("adVideo");
+  function enableSound(){ video.muted=false; video.play(); document.removeEventListener("click",enableSound); document.removeEventListener("touchstart",enableSound); }
+  document.addEventListener("click",enableSound);
+  document.addEventListener("touchstart",enableSound);
+  document.getElementById("soundBtn").addEventListener("click",function(){ video.muted=!video.muted; this.textContent=video.muted?"🔇":"🔊"; });
+
+  // SLIDER
+  let currentIndex=0;
+  const track=document.getElementById('sliderTrack');
+  const cards=track.children;
+  const slider=track.parentElement;
+  function updateSlider(){
+    const offset=(slider.offsetWidth/2)-(cards[0].offsetWidth/2)-(currentIndex*(cards[0].offsetWidth+30));
+    track.style.transform=`translateX(${offset}px)`;
+    Array.from(cards).forEach((card,i)=>{
+      if(i===currentIndex){card.style.opacity='1';card.style.transform='scale(1)';card.style.zIndex='10';}
+      else if(Math.abs(i-currentIndex)===1){card.style.opacity='0.6';card.style.transform='scale(0.85)';card.style.zIndex='5';}
+      else{card.style.opacity='0.3';card.style.transform='scale(0.7)';card.style.zIndex='1';}
+    });
+  }
+  function moveLeft(){ if(currentIndex>0){currentIndex--;updateSlider();} }
+  function moveRight(){ if(currentIndex<cards.length-1){currentIndex++;updateSlider();} }
+  Array.from(cards).forEach((card,i)=>{ card.addEventListener('click',()=>{currentIndex=i;updateSlider();}); card.style.cursor='pointer'; });
+  let auto=setInterval(()=>{ currentIndex<cards.length-1?currentIndex++:currentIndex=0; updateSlider(); },4000);
+  track.parentElement.parentElement.addEventListener('mouseenter',()=>clearInterval(auto));
+  track.parentElement.parentElement.addEventListener('mouseleave',()=>{ auto=setInterval(()=>{currentIndex<cards.length-1?currentIndex++:currentIndex=0;updateSlider();},4000); });
+
+  // COUNTER
+  let count=0,started=false;
+  function updateCounter(){ if(count<100){count+=5;if(count>100)count=100;document.getElementById('counter').textContent=count;setTimeout(updateCounter,30);} }
+
+  // SCROLL OBSERVER
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('animated');
+        if(e.target.querySelector('#counter')&&!started){started=true;updateCounter();}
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -80px 0px'});
+  document.addEventListener('DOMContentLoaded',()=>{ document.querySelectorAll('.animate-on-scroll').forEach(el=>obs.observe(el)); updateSlider(); });
+  window.addEventListener('resize',updateSlider);
+  setTimeout(updateSlider,100);
+
+</script>
+
+
+</body>
+
+</html>
